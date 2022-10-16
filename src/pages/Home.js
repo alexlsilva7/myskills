@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Text, SafeAreaView, StyleSheet, TextInput, FlatList } from "react-native";
 import { Button } from "../components/Button";
@@ -8,15 +8,30 @@ export function Home() {
 
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkills] = useState([]);
+    const [greeting, setGreeting] = useState('');
 
     function handleAddNewSkill() {
         setMySkills(oldState => [...oldState, newSkill]);
     }
 
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+        if (currentHour < 12) {
+            setGreeting('Good morning');
+        } else if (currentHour >= 12 && currentHour < 18) {
+            setGreeting('Good afternoon');
+        } else {
+            setGreeting('Good night');
+        }
+    }, []);
+
 
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.title}>Welcome, Alex</Text>
+            
+            <Text style={styles.greetings}>{greeting}</Text>
+
             <TextInput style={styles.input}
                 placeholder="New skill"
                 placeholderTextColor='#555'
@@ -25,6 +40,8 @@ export function Home() {
 
             <Button onPress={handleAddNewSkill} />
             <Text style={[styles.title, { marginVertical: 30 }]}>My Skills</Text>
+
+
             <FlatList 
                 data={mySkills}
                 keyExtractor={item => item}
@@ -59,7 +76,9 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         width: '100%',
     },
-
+    greetings: {
+        color: '#FFF',
+    }
 
 
 })
