@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Touchable } from "react-native";
+import { Text, SafeAreaView, StyleSheet, TextInput, FlatList } from "react-native";
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
 
@@ -23,13 +23,17 @@ export function Home() {
                 onChangeText={setNewSkill}
             />
 
-           <Button onPress={handleAddNewSkill}/>
+            <Button onPress={handleAddNewSkill} />
             <Text style={[styles.title, { marginVertical: 30 }]}>My Skills</Text>
-            {
-                mySkills.map(skill => (
-                    <SkillCard key={skill} skill={skill}/>
-                ))
-            }
+            <FlatList 
+                data={mySkills}
+                keyExtractor={item => item}
+                renderItem={({ item }) => (
+                    <SkillCard skill={item} />
+                )}
+                width="100%"
+            />
+            
         </SafeAreaView >
     );
 }
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         width: '100%',
     },
-    
-    
+
+
 
 })

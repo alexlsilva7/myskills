@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 10,
         width: '100%',
-
     },
     textSkill: {
         color: '#FFF',
